@@ -232,7 +232,11 @@ public class Dao {
 
     public static List<Item> obtenerArticulosPujables() {
         // TODO 18 obtenerArticulosPujables
-        return null;
+        List<Item> lista = new ArrayList<>();
+        mapaPujas.forEach((id, listado) -> {
+            lista.add(mapaItems.get(id));
+        });
+        return lista;
     }
 
     public static boolean pujarArticulo(long idArt, String nombre, int precio) {

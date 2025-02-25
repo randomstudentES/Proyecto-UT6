@@ -223,7 +223,11 @@ public class Dao {
 
     public static Item obtenerArticuloPujable(long idArt) {
         // TODO 17 obtenerArticuloPujable
-        return null;
+        if (mapaPujas.get(idArt) == null){
+            return null;
+        } else{
+            return mapaItems.get(idArt);
+        }
     }
 
     public static List<Item> obtenerArticulosPujables() {

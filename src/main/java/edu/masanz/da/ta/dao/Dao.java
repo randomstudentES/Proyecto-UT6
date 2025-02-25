@@ -6,6 +6,7 @@ import edu.masanz.da.ta.utils.Security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 
 import static edu.masanz.da.ta.conf.Ctes.*;
@@ -36,6 +37,7 @@ public class Dao {
     }
 
     private static void iniMapaUsuarios() {
+        mapaUsuarios = new HashMap<>();
         for (int i = 0; i < USUARIOS.length; i++) {
             String[] partes = USUARIOS[i].split(",");
             mapaUsuarios.put(partes[0], new Usuario(partes[0], partes[1], partes[2], partes[3]));
@@ -43,6 +45,7 @@ public class Dao {
     }
 
     private static void iniMapaItems() {
+        mapaItems = new HashMap<>();
         for (int i = 0; i < ITEMS.length; i++) {
             String[] partes = ITEMS[i].split(",");
             mapaItems.put(Long.parseLong(partes[0]),
@@ -53,6 +56,7 @@ public class Dao {
 
     private static void iniMapaPujas() {
         // TODO 03 iniMapaPujas
+        mapaPujas = new HashMap<>();
         for (int i = 0; i < PUJAS.length; i++) {
             String[] partes = PUJAS[i].split(",");
             mapaPujas.put(Long.parseLong(partes[0]), new ArrayList<>());
@@ -63,7 +67,7 @@ public class Dao {
 
     //region Usuarios
     public static boolean autenticar(String nombreUsuario, String password) {
-//        return password.equals("1234"); - ???????
+//        return password.equals("1234"); - ??????? ??????????????????
         // TODO 04 autenticar
         if (mapaUsuarios.containsKey(nombreUsuario)){
             try {
@@ -98,7 +102,38 @@ public class Dao {
 
     public static boolean crearUsuario(String nombre, String password, boolean esAdmin) {
         // TODO 07 crearUsuario
-        return true;
+        if (mapaUsuarios.containsKey(nombre)) {
+            return false;
+        }
+
+        try {
+            byte[] salt2 = new byte[16];
+            new SecureRandom().nextBytes(salt2);
+
+            String salt = Base64.getEncoder().encodeToString(salt2);
+
+            MessageDigest hash = MessageDigest.getInstance("SHA-1");
+            byte[] hashBytes = hash.digest((salt + password).getBytes());
+            StringBuilder hashFinal = new StringBuilder();
+            for (int i = 0; i < hashBytes.length; i++) {
+                hashFinal.append(String.format("%02x", hashBytes[i]));
+            }
+            Usuario nuevoUsuario;
+            if (esAdmin){
+                nuevoUsuario = new Usuario(nombre, hashFinal.toString(), salt, "Admin");
+            } else{
+                nuevoUsuario = new Usuario(nombre, hashFinal.toString(), salt, "Usuario");
+            }
+
+
+            // Agregar el nuevo usuario al mapa
+            mapaUsuarios.put(nombre, nuevoUsuario);
+            return true;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     public static boolean modificarPasswordUsuario(String nombre, String password) {

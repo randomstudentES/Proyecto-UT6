@@ -1,5 +1,6 @@
 package edu.masanz.da.ta.dao;
 
+import edu.masanz.da.ta.conf.Ini;
 import edu.masanz.da.ta.dto.*;
 import edu.masanz.da.ta.utils.Security;
 
@@ -33,7 +34,10 @@ public class Dao {
     }
 
     private static void iniMapaUsuarios() {
-        // TODO 01 iniMapaUsuarios
+        for (int i = 0; i < USUARIOS.length; i++) {
+            String[] partes = USUARIOS[i].split(",");
+            mapaUsuarios.put(USUARIOS[i].split(",")[0], new Usuario(partes[0], partes[1], partes[2], partes[3]));
+        }
     }
 
     private static void iniMapaItems() {

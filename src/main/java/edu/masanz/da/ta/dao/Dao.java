@@ -142,8 +142,8 @@ public class Dao {
     }
 
     public static boolean modificarRolUsuario(String nombre, String rol) {
-        // TODO 09 modificarRolUsuario
-        return false;
+        mapaUsuarios.get(nombre).setRol(rol);
+        return true;
     }
 
     public static boolean eliminarUsuario(String nombre) {

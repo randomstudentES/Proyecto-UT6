@@ -156,8 +156,13 @@ public class Dao {
 
     //region Validación de artículos
     public static List<Item> obtenerArticulosPendientes() {
-        // TODO 11 obtenerArticulosPendientes
-        return null;
+        List<Item> lista = new ArrayList<>();
+        mapaItems.forEach((id, item) -> {
+            if (item.getEstado() == 0){
+                lista.add(item);
+            }
+        });
+        return lista;
     }
 
     public static boolean validarArticulo(long id, boolean valido) {

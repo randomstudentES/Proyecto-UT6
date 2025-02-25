@@ -86,7 +86,7 @@ public class Dao {
     public static boolean esAdmin(String nombreUsuario) {
 //        return nombreUsuario.equalsIgnoreCase("Admin");
         // TODO 05 esAdmin
-        return false;
+        return mapaUsuarios.get(nombreUsuario).getRol().equalsIgnoreCase("Admin");
     }
 
     public static List<Usuario> obtenerUsuarios() {

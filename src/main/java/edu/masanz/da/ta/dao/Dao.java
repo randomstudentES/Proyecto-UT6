@@ -36,12 +36,17 @@ public class Dao {
     private static void iniMapaUsuarios() {
         for (int i = 0; i < USUARIOS.length; i++) {
             String[] partes = USUARIOS[i].split(",");
-            mapaUsuarios.put(USUARIOS[i].split(",")[0], new Usuario(partes[0], partes[1], partes[2], partes[3]));
+            mapaUsuarios.put(partes[0], new Usuario(partes[0], partes[1], partes[2], partes[3]));
         }
     }
 
     private static void iniMapaItems() {
-        // TODO 02 iniMapaItems
+        for (int i = 0; i < ITEMS.length; i++) {
+            String[] partes = ITEMS[i].split(",");
+            mapaItems.put(Long.parseLong(partes[0]),
+                    new Item(Long.parseLong(partes[0]), partes[1], partes[2], Integer.parseInt(partes[3]),
+                            partes[4], partes[5], Integer.parseInt(partes[6]), Boolean.getBoolean(partes[7])));
+        }
     }
 
     private static void iniMapaPujas() {

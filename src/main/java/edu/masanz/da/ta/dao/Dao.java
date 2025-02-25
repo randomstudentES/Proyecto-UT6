@@ -194,7 +194,28 @@ public class Dao {
 
     public static List<PujaItem> obtenerHistoricoGanadores() {
         // TODO 16 obtenerHistoricoGanadores
-        return null;
+        List<PujaItem> historicoGanadores = new ArrayList<>();
+
+        for (Map.Entry<Long, List<Puja>> entry : mapaPujas.entrySet()) {
+            long idArticulo = entry.getKey();
+            List<Puja> pujas = entry.getValue();
+
+            if (!pujas.isEmpty()) {
+                Puja ganadora = null;
+                for (Puja puja : pujas) {
+                    if (ganadora == null || puja.getPrecioPujado() > ganadora.getPrecioPujado()) {
+                        ganadora = puja;
+                    }
+                }
+
+                Item item = mapaItems.get(idArticulo);
+                PujaItem pujaItem = new PujaItem();
+
+                historicoGanadores.add(pujaItem);
+            }
+        }
+
+        return historicoGanadores;
     }
     //endregion
 

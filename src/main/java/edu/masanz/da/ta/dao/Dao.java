@@ -91,7 +91,9 @@ public class Dao {
 
     public static List<Usuario> obtenerUsuarios() {
         // TODO 06 obtenerUsuarios
-        return null;
+        List<Usuario> lista = new ArrayList<>();
+        mapaUsuarios.forEach((clave, usuario) -> lista.add(usuario));
+        return lista;
     }
 
     public static boolean crearUsuario(String nombre, String password, boolean esAdmin) {

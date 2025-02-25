@@ -140,7 +140,20 @@ public class Dao {
 
     public static boolean modificarPasswordUsuario(String nombre, String password) {
         // TODO 08 modificarPasswordUsuario
-        return false;
+        try {
+            Usuario usuario = mapaUsuarios.get(nombre);
+            String salt = usuario.getSal();
+            MessageDigest hash = MessageDigest.getInstance("SHA-1");
+            byte[] hashBytes = hash.digest((salt + password).getBytes());
+            StringBuilder hashFinal = new StringBuilder();
+            for (byte b : hashBytes) {
+                hashFinal.append(String.format("%02x", b));
+            }
+            usuario.setHashPwSal(hashFinal.toString());
+            return true;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean modificarRolUsuario(String nombre, String rol) {

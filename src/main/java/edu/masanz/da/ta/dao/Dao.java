@@ -4,6 +4,8 @@ import edu.masanz.da.ta.conf.Ini;
 import edu.masanz.da.ta.dto.*;
 import edu.masanz.da.ta.utils.Security;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import static edu.masanz.da.ta.conf.Ctes.*;
@@ -61,8 +63,23 @@ public class Dao {
 
     //region Usuarios
     public static boolean autenticar(String nombreUsuario, String password) {
-//        return password.equals("1234");
+//        return password.equals("1234"); - ???????
         // TODO 04 autenticar
+        if (mapaUsuarios.containsKey(nombreUsuario)){
+            try {
+                MessageDigest hash = MessageDigest.getInstance("SHA-1");
+                byte[] hashBytes = hash.digest((mapaUsuarios.get(nombreUsuario).getSal() + password).getBytes());
+                StringBuilder hashFinal = new StringBuilder();
+                for (int i = 0; i < hashBytes.length; i++) {
+                    hashFinal.append(String.format("%02x", hashBytes[i]));
+                }
+                if (hashFinal.toString().equals(mapaUsuarios.get(nombreUsuario).getHashPwSal())){
+                    return true;
+                }
+            } catch (NoSuchAlgorithmException e) {
+                return false;
+            }
+        }
         return false;
     }
 

@@ -7,6 +7,8 @@ import edu.masanz.da.ta.utils.Security;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static edu.masanz.da.ta.conf.Ctes.*;
@@ -223,7 +225,7 @@ public class Dao {
 
     public static Item obtenerArticuloPujable(long idArt) {
         // TODO 17 obtenerArticuloPujable
-        if (mapaPujas.get(idArt) == null){
+        if (mapaPujas.gparseLonget(idArt) == null){
             return null;
         } else{
             return mapaItems.get(idArt);
@@ -241,16 +243,24 @@ public class Dao {
 
     public static boolean pujarArticulo(long idArt, String nombre, int precio) {
         // TODO 19 pujarArticulo
-        return false;
+        mapaPujas.get(idArt).add(new Puja(idArt, nombre, precio, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+        return true;
     }
 
     public static List<PujaItem> obtenerPujasVigentesUsuario(String nombreUsuario) {
         // TODO 20 obtenerPujasVigentesUsuario
-        return null;
+        List<PujaItem> lista = new ArrayList<>();
+        mapaPujas.forEach((id, pujas) -> pujas.forEach((texto) -> {
+            if (texto.getNombreUsuario().equalsIgnoreCase(nombreUsuario)){
+                lista.add(new PujaItem(texto));
+            }
+        }));
+        return lista;
     }
 
     public static boolean ofrecerArticulo(Item item) {
         // TODO 21 ofrecerArticulo
+        mapaItems.put((long) (mapaItems.size() + 2), item);
         return true;
     }
 

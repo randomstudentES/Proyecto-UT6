@@ -225,7 +225,7 @@ public class Dao {
 
     public static Item obtenerArticuloPujable(long idArt) {
         // TODO 17 obtenerArticuloPujable
-        if (mapaPujas.gparseLonget(idArt) == null){
+        if (mapaPujas.get(idArt) == null){
             return null;
         } else{
             return mapaItems.get(idArt);
@@ -260,7 +260,7 @@ public class Dao {
 
     public static boolean ofrecerArticulo(Item item) {
         // TODO 21 ofrecerArticulo
-        mapaItems.put((long) (mapaItems.size() + 2), item);
+        mapaItems.put((long) (mapaItems.size() + 1), item);
         return true;
     }
 

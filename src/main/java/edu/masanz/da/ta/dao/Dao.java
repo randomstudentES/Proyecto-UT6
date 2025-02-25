@@ -181,11 +181,14 @@ public class Dao {
     //region Gestión de artículos y pujas de administrador
     public static List<ItemPujas> obtenerArticulosConPujas() {
         // TODO 14 obtenerArticulosConPujas
-        return null;
+        List<ItemPujas> lista = new ArrayList<>();
+        mapaPujas.forEach((id, listapuja) -> lista.add(new ItemPujas(mapaItems.get(id), listapuja)));
+        return lista;
     }
 
     public static boolean resetearSubasta() {
         // TODO 15 resetearSubasta
+        mapaPujas.clear();
         return true;
     }
 

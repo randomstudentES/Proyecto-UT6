@@ -167,11 +167,13 @@ public class Dao {
 
     public static boolean validarArticulo(long id, boolean valido) {
         // TODO 12 validarArticulo
-        return false;
+        mapaItems.get(id).setEstado(1);
+        valido  = true;
+        return valido;
     }
 
     public static boolean validarTodos() {
-        // TODO 13 validarTodos
+        mapaItems.forEach((id, item) -> item.setEstado(1));
         return true;
     }
     //endregion

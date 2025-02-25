@@ -148,6 +148,7 @@ public class Dao {
 
     public static boolean eliminarUsuario(String nombre) {
         // TODO 10 eliminarUsuario
+        mapaUsuarios.remove(nombre);
         return true;
     }
 

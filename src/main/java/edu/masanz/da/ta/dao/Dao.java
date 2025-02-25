@@ -51,6 +51,11 @@ public class Dao {
 
     private static void iniMapaPujas() {
         // TODO 03 iniMapaPujas
+        for (int i = 0; i < PUJAS.length; i++) {
+            String[] partes = PUJAS[i].split(",");
+            mapaPujas.put(Long.parseLong(partes[0]), new ArrayList<>());
+            mapaPujas.get(Long.parseLong(partes[0])).add(new Puja(Long.parseLong(partes[0]), partes[1], Integer.parseInt(partes[2]), partes[3]));
+        }
     }
     //endregion
 
